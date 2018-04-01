@@ -7,12 +7,12 @@ import jsinterop.annotations.JsMethod;
 
 /**
  * A factory to create {@link IsVueComponent}s.
- * All the {@link Component} and {@link JsComponent} get a generated {@link VueFactory}.
+ * All the {@link Component} and {@link JsComponent} get a generated {@link VueComponentFactory}.
  * It wraps a {@link VueJsConstructor} that is configured when the factory is created.
  * It can be injected with Gin or Dagger2.
  * @author Adrien Baron
  */
-public class VueFactory<T extends IsVueComponent>
+public class VueComponentFactory<T extends IsVueComponent>
 {
     protected VueJsConstructor<T> jsConstructor;
 

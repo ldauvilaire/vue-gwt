@@ -8,7 +8,7 @@ import com.axellience.vuegwt.core.annotations.component.Watch;
 import com.axellience.vuegwt.core.client.component.IsVueComponent;
 import com.axellience.vuegwt.core.client.component.hooks.HasRender;
 import com.axellience.vuegwt.core.client.component.options.CustomizeOptions;
-import com.axellience.vuegwt.core.client.vue.VueFactory;
+import com.axellience.vuegwt.core.client.vue.VueComponentFactory;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.ParameterizedTypeName;
 import com.squareup.javapoet.TypeName;
@@ -125,14 +125,14 @@ public class ComponentGeneratorsUtil
                     + variableElement.asType()
                     + " for variable "
                     + variableElement
-                    + ". If you are trying to inject a ComponentFactory inside a Component, please inject VueFactory<MyComponent> instead.");
+                    + ". If you are trying to inject a ComponentFactory inside a Component, please inject VueComponentFactory<MyComponent> instead.");
         }
 
         TypeName typeName = ClassName.get(variableElement.asType());
         if (typeName instanceof ParameterizedTypeName)
         {
             ParameterizedTypeName parameterizedTypeName = (ParameterizedTypeName) typeName;
-            if (parameterizedTypeName.rawType.equals(ClassName.get(VueFactory.class)))
+            if (parameterizedTypeName.rawType.equals(ClassName.get(VueComponentFactory.class)))
             {
                 return componentFactoryName((ClassName) parameterizedTypeName.typeArguments.get(0));
             }
@@ -159,7 +159,7 @@ public class ComponentGeneratorsUtil
 
     /**
      * Return weather a given field is visible in JS (JsInterop).
-     * It will be the case if it's public and it's class has the {@link JsType} annotation, or
+     * It will be the case if it's public and it's class has the {@link ExposedType} annotation, or
      * if it has the {@link JsProperty} annotation.
      * @param field The field to check
      * @return true if it is visible (JsInterop), false otherwise
@@ -173,7 +173,7 @@ public class ComponentGeneratorsUtil
 
     /**
      * Return weather a given method is visible in JS (JsInterop).
-     * It will be the case if it's public and it's class/interface has the {@link JsType}
+     * It will be the case if it's public and it's class/interface has the {@link ExposedType}
      * annotation, or
      * if it has the {@link JsMethod} annotation.
      * @param method The method to check

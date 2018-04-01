@@ -4,7 +4,7 @@ import com.axellience.vuegwt.core.annotations.component.Component;
 import com.axellience.vuegwt.core.annotations.component.Computed;
 import com.axellience.vuegwt.core.annotations.component.Prop;
 import com.axellience.vuegwt.core.client.component.IsVueComponent;
-import com.axellience.vuegwt.processors.component.ComponentJsTypeGenerator;
+import com.axellience.vuegwt.processors.component.ComponentExposedTypeGenerator;
 import com.axellience.vuegwt.processors.component.template.builder.TemplateMethodsBuilder;
 import com.axellience.vuegwt.processors.component.template.parser.TemplateParser;
 import com.axellience.vuegwt.processors.component.template.parser.context.TemplateParserContext;
@@ -57,7 +57,7 @@ public class ComponentTemplateProcessor
     }
 
     public void processComponentTemplate(TypeElement componentTypeElement,
-        Builder componentJsTypeBuilder)
+        Builder componentExposedTypeBuilder)
     {
         ClassName componentTypeName = ClassName.get(componentTypeElement);
         Optional<String> optionalTemplateContent =
@@ -83,16 +83,16 @@ public class ComponentTemplateProcessor
             templateParserContext,
             messager);
 
-        // Add expressions from the template to JsType and compile template
+        // Add expressions from the template to ExposedType and compile template
         TemplateMethodsBuilder templateMethodsBuilder = new TemplateMethodsBuilder();
-        templateMethodsBuilder.addTemplateMethodsToComponentJsType(componentJsTypeBuilder,
+        templateMethodsBuilder.addTemplateMethodsToComponentExposedType(componentExposedTypeBuilder,
             templateParserResult);
     }
 
     /**
-     * Process the ComponentJsType class to register all the fields and methods visible in
+     * Process the ComponentExposedType class to register all the fields and methods visible in
      * the context.
-     * TODO: Improve this method by putting things together with {@link ComponentJsTypeGenerator}
+     * TODO: Improve this method by putting things together with {@link ComponentExposedTypeGenerator}
      * @param componentTypeElement The class to process
      */
     private void registerFieldsAndMethodsInContext(TemplateParserContext templateParserContext,
