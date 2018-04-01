@@ -10,7 +10,9 @@ import com.axellience.vuegwt.core.client.vue.VueComponentFactory;
 import com.axellience.vuegwt.core.client.vue.VueJsConstructor;
 import elemental2.core.JsObject;
 import elemental2.dom.DomGlobal;
-import jsinterop.annotations.JsMethod;
+import jsinterop.annotations.JsIgnore;
+import jsinterop.annotations.JsPackage;
+import jsinterop.annotations.JsType;
 import jsinterop.base.JsPropertyMap;
 
 import java.util.LinkedList;
@@ -18,6 +20,7 @@ import java.util.LinkedList;
 /**
  * @author Adrien Baron
  */
+@JsType(namespace = JsPackage.GLOBAL)
 public class VueGWT
 {
     private static boolean isReady = false;
@@ -27,6 +30,7 @@ public class VueGWT
      * Inject scripts necessary for Vue GWT to work.
      * Also inject Vue.js library.
      */
+    @JsIgnore
     public static void init()
     {
         if (isDevMode())
@@ -48,6 +52,7 @@ public class VueGWT
      * Inject scripts necessary for Vue GWT to work
      * Requires Vue to be defined in Window.
      */
+    @JsIgnore
     public static void initWithoutVueLib()
     {
         if (!isVueLibInjected())
@@ -73,6 +78,7 @@ public class VueGWT
      * @param <T> The type of the {@link IsVueComponent}
      * @return The created instance of our Component (not yet mounted)
      */
+    @JsIgnore
     public static <T extends IsVueComponent> T createInstance(Class<T> isVueComponentClass)
     {
         return getVueComponentFactory(isVueComponentClass).create();
@@ -84,6 +90,7 @@ public class VueGWT
      * @param <T> The type of the {@link IsVueComponent}
      * @return A {@link VueComponentFactory} you can use to instantiate components
      */
+    @JsIgnore
     public static <T extends IsVueComponent> VueComponentFactory<T> getVueComponentFactory(Class<T> isVueComponentClass)
     {
         if (JsObject.class.equals(isVueComponentClass))
@@ -100,7 +107,6 @@ public class VueGWT
      * @param <T> The type of the {@link IsVueComponent}
      * @return A {@link VueComponentFactory} you can use to instantiate components
      */
-    @JsMethod(namespace = "VueGWT")
     public static <T extends IsVueComponent> VueComponentFactory<T> getVueComponentFactory(String componentQualifiedName)
     {
         ComponentExposedTypeConstructorFn<T> javaConstructor =
@@ -119,6 +125,7 @@ public class VueGWT
      * @param <T> The type of the {@link IsVueComponent}
      * @return A {@link VueJsConstructor} you can use to instantiate components
      */
+    @JsIgnore
     public static <T extends IsVueComponent> VueJsConstructor<T> getJsConstructor(
         Class<T> isVueComponentClass)
     {
@@ -131,7 +138,6 @@ public class VueGWT
      * @param <T> The type of the {@link IsVueComponent}
      * @return A {@link VueJsConstructor} you can use to instantiate components
      */
-    @JsMethod(namespace = "VueGWT")
     public static <T extends IsVueComponent> VueJsConstructor<T> getJsConstructor(
         String qualifiedName)
     {
@@ -146,6 +152,7 @@ public class VueGWT
      * @param <T> The type of the {@link IsVueComponent}
      * @return The Java constructor of our {@link IsVueComponent}
      */
+    @JsIgnore
     public static <T extends IsVueComponent> ComponentExposedTypeConstructorFn<T> getComponentExposedTypeConstructorFn(
         Class<T> isVueComponentClass)
     {
@@ -159,7 +166,6 @@ public class VueGWT
      * @param componentQualifiedName The fully qualified name of the {@link IsVueComponent} class
      * @return The Java constructor of our {@link IsVueComponent}
      */
-    @JsMethod(namespace = "VueGWT")
     public static <T extends IsVueComponent> ComponentExposedTypeConstructorFn<T> getComponentExposedTypeConstructorFn(
         String componentQualifiedName)
     {
@@ -172,6 +178,7 @@ public class VueGWT
      * If Vue GWT is ready, the callback is called immediately.
      * @param callback The callback to call when Vue GWT is ready.
      */
+    @JsIgnore
     public static void onReady(Runnable callback)
     {
         if (isReady)
