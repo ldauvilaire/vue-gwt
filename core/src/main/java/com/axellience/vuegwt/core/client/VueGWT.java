@@ -5,7 +5,6 @@ import com.axellience.vuegwt.core.client.component.IsVueComponent;
 import com.axellience.vuegwt.core.client.observer.VueGWTObserverManager;
 import com.axellience.vuegwt.core.client.observer.vuegwtobservers.CollectionObserver;
 import com.axellience.vuegwt.core.client.observer.vuegwtobservers.MapObserver;
-import com.axellience.vuegwt.core.client.tools.VueGWTTools;
 import com.axellience.vuegwt.core.client.vue.VueComponentFactory;
 import com.axellience.vuegwt.core.client.vue.VueJsConstructor;
 import elemental2.core.JsObject;
@@ -169,8 +168,8 @@ public class VueGWT
     public static <T extends IsVueComponent> ComponentExposedTypeConstructorFn<T> getComponentExposedTypeConstructorFn(
         String componentQualifiedName)
     {
-        return VueGWTTools.getDeepValue(DomGlobal.window,
-            "VueGWTComponents." + componentQualifiedName + ".ExposedTypeConstructorFn");
+        return (ComponentExposedTypeConstructorFn<T>) VueGWTWindow.VueGWTExposedTypesRepository.get(
+            componentQualifiedName.replaceAll("\\.", "_"));
     }
 
     /**
@@ -193,5 +192,12 @@ public class VueGWT
     static boolean isVueLibInjected()
     {
         return ((JsPropertyMap) DomGlobal.window).get("Vue") != null;
+    }
+
+    @JsType(isNative = true, namespace = JsPackage.GLOBAL, name = "window")
+    private static class VueGWTWindow
+    {
+        public static JsPropertyMap<ComponentExposedTypeConstructorFn<?>>
+            VueGWTExposedTypesRepository;
     }
 }

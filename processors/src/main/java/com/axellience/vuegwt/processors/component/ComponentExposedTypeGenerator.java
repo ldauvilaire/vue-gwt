@@ -166,8 +166,8 @@ public class ComponentExposedTypeGenerator
         // tree shaking.
         componentExposedTypeBuilder.addAnnotation(AnnotationSpec
             .builder(JsType.class)
-            .addMember("namespace", "$S", "VueGWTComponents." + component.getQualifiedName())
-            .addMember("name", "$S", "ExposedTypeConstructorFn")
+            .addMember("namespace", "$S", "VueGWTExposedTypesRepository")
+            .addMember("name", "$S", component.getQualifiedName().toString().replaceAll("\\.", "_"))
             .build());
 
         return componentExposedTypeBuilder;
